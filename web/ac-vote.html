@@ -1,0 +1,72 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<dom-module id="ac-vote">
+  <template>
+    <style>
+      div {
+        padding: 24px;
+      }
+      .content {
+        @apply(--layout-vertical);
+        @apply(--center-justified);
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+    paper-card {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+    paper-checkbox {
+        display: block;
+        margin-top: 16px;
+    }
+    paper-button {
+      background: #4285f4;
+      color: #fff;
+    }
+    </style>
+
+    <div class="content">
+      <paper-card elevation=1 class="input" heading="A S D F">
+        <div class="card-content">
+            The topic for the acronym goes here!
+        </div>
+        <div class="card-actions">
+          Vote:
+
+          <template is="dom-repeat" items="{{responses}}">
+            <paper-checkbox>{{item}}</paper-checkbox>
+          </template>
+
+        </div>
+        <div class="card-actions">
+          <paper-button raised on-tap="done">Done</paper-button>
+        </div>
+      </paper-card>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      ready: function() {
+        this.responses = [
+          "Etiam id nisl at",
+          "neque vehicula aliquet. Vivamus",
+          "maximus libero eu libero",
+          "venenatis, porta tempus nunc",
+          "pretium. Aliquam lacus sapien,",
+          "rhoncus at diam et,",
+          "suscipit rhoncus felis. Proin",
+          "libero lacus, feugiat sit",
+          "amet dictum nec, sollicitudin",
+          "eget leo. Pellentesque lacinia."];
+      },
+      done: function() {
+        this.fire('vote', {asdf:'fdsa'});
+      }
+    });
+  </script>
+</dom-module>

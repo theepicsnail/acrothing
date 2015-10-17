@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+    <title>Acrothing</title>
+    <meta name="viewport"
+          content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="../bower_components/webcomponentsjs/webcomponents.js"></script>
+
+    <link rel="import" href="../web/ac-main.html">
+    <link rel="import" href="../web/ac-chat.html">
+    <link rel="import" href="../web/ac-round.html">
+    <link rel="import" href="../web/ac-vote.html">
+    <link rel="import" href="../web/ac-results.html">
+
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            background-color: #E5E5E5;
+            font-family: 'RobotoDraft', sans-serif;
+            overflow:hidden;
+        }
+
+        ac-main {
+          position:absolute;
+          top:0px;
+          bottom:0px;
+          width:100%
+        }
+    </style>
+</head>
+<body unresolved class="fullbleed layout vertical">
+
+    <ac-main token='{{token}}'></ac-main>
+ <!--
+  <ac-chat id="chat" token="{{token}}"></ac-chat>
+  <ac-scores gameid="{{gameid}}"></ac-scores>
+  <ac-round></ac-round>
+  <ac-vote></ac-vote>
+  <ac-results></ac-results>
+  <!---->
+</body>
+</html>

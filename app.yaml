@@ -1,0 +1,22 @@
+application: app
+api_version: 1
+version: auto
+runtime: python27
+threadsafe: true
+
+handlers:
+- url: /play/?.*
+  script: server.main.app
+  login: required
+
+- url: /bower_components/
+  static_dir: bower_components
+  login: required
+
+- url: /web
+  static_dir: web
+  login: required
+
+- url: /
+  static_dir: web
+  login: required

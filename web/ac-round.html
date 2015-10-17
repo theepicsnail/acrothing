@@ -1,0 +1,56 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-input/paper-input-container.html">
+<dom-module id="ac-round">
+  <template>
+    <style>
+      div {
+        padding: 24px;
+      }
+      .content {
+        @apply(--layout-vertical);
+        @apply(--center-justified);
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+    paper-card {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+    </style>
+
+    <div class="content">
+
+      <paper-card elevation=1 class="input" heading="A S D F">
+        <div class="card-content">
+            Something to do on vacation.
+        </div>
+        <div class="card-actions">
+          <paper-input id="input"
+                       floatingLabel="1"
+                       label="A S D F:"
+                       on-change="inputchange"
+                       autofocus>
+          </paper-input>
+        </div>
+      </paper-card>
+
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      ready: function() {
+
+      },
+      inputchange:function(e) {
+        this.fire('submit', {value: e});
+      }
+    });
+  </script>
+</dom-module>

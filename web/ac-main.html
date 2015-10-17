@@ -1,0 +1,114 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="/bower_components/neon-animation/neon-animated-pages.html">
+<link rel="import" href="/bower_components/neon-animation/neon-animations.html">
+
+<link rel="import" href="../web/ac-chat.html">
+<link rel="import" href="../web/ac-round.html">
+<link rel="import" href="../web/ac-vote.html">
+<link rel="import" href="../web/ac-results.html">
+<script type="text/javascript" src="/_ah/channel/jsapi"></script>
+
+<dom-module id="ac-main">
+  <style>
+  neon-animated-pages {
+      position:absolute;
+      top:0px;
+      bottom:0px;
+      width:100%
+  }
+  neon-animatable {
+    display:block;
+    height:100%;
+    overflow: auto;
+  }
+  </style>
+  <template>
+    <neon-animated-pages
+        id="display"
+        class="flex"
+        selected="[[selected]]"
+        entry-animation="slide-from-right-animation"
+        exit-animation="slide-left-animation"
+        attr-for-selected="id">
+
+      <neon-animatable id="chat">
+        <ac-chat></ac-chat>
+      </neon-animatable>
+
+      <neon-animatable id="round">
+        <ac-round on-submit="roundSubmit"></ac-round>
+      </neon-animatable>
+
+      <neon-animatable id="vote">
+        <ac-vote on-vote="voted"></ac-vote>
+      </neon-animatable>
+
+      <neon-animatable id="results">
+        <ac-results on-finished="finishedViewing"></ac-results>
+      </neon-animatable>
+
+    </neon-animated-pages>
+  </template>
+  <script>
+    Polymer({
+      properties:{
+        selected:{
+          value:"chat"
+        }
+      },
+      ready: function(){
+        this.chat = this.querySelector('ac-chat')
+        this.channel = new goog.appengine.Channel(this.getAttribute('token'));
+        this.channel.open({
+          'onopen':console.log.bind(console),
+          'onmessage':this.onmessage.bind(this),
+          'onerror':console.log.bind(console),
+          'onclose':console.log.bind(console),
+        });
+
+        this.startRoundCountdown();
+      },
+
+      onmessage:function (obj) {
+        console.log("message");
+        console.log(obj);
+        data = JSON.parse(obj.data);
+        this.chat.addMessage(data["sender"], data["message"]);
+      },
+
+      startRoundCountdown: function() {
+        var timer = 30;
+        var _ = this;
+        var addMessage = this.chat.addMessage.bind(this.chat);
+        var interval = setInterval(function(){
+          console.log(timer);
+          switch(timer) {
+            case 30: case 15: case 10: case 3: case 2: case 1:
+              addMessage("Round", "Starting in " + timer +" seconds.");
+            break;
+            case 0: // Round should begin nowish.
+              clearInterval(interval);
+              _.selected = "round"
+            break;
+          }
+          timer -= 1;
+        }, 1000);
+      },
+
+      roundSubmit: function(event) {
+        console.log("Submitted", event);
+        this.selected = "vote";
+      },
+      voted: function(event) {
+        console.log("Voted", event);
+        this.selected = "results";
+      },
+      finishedViewing: function(event) {
+        console.log("Finished");
+        this.selected = "chat";
+        this.startRoundCountdown();
+      }
+    });
+  </script>
+</dom-module>

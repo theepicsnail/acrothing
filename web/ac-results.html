@@ -1,0 +1,80 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-item/paper-item-body.html">
+<dom-module id="ac-results">
+  <style is="custom-style">
+    .list {
+      margin: 16px;
+      width: 100%;
+      padding-top: 12px;
+      background-color: white;
+      display: inline-block;
+      @apply(--shadow-elevation-2dp);
+    }
+
+    .content {
+      @apply(--layout-vertical);
+      @apply(--center-justified);
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    paper-card {
+      width: 100%;
+    }
+    paper-button {
+      background: #4285f4;
+      color: #fff;
+    }
+
+    .score {
+      margin-right: 8px;
+    }
+  </style>
+
+  <template>
+    <div class="content layout wrap inline center-center">
+      <paper-card elevation=1 class="input" heading="A S D F">
+        <div class="card-content">
+            The topic for the acronym goes here!
+        </div>
+      </paper-card>
+      <div class="list" role="list">
+        <template is="dom-repeat" items="{{responses}}">
+          <paper-item>
+            <div class="score" item-icon>{{item.score}}</div>
+            <paper-item-body two-line class="layout vertical">
+              <div>{{item.text}}</div>
+              <div secondary>{{item.author}}</div>
+            </paper-item-body>
+          </paper-item>
+        </template>
+      </div>
+      <paper-card>
+        <div class="card-actions">
+          <paper-button on-tap="finished" raised>Done</paper-button>
+        </div>
+      </paper-card>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      ready: function() {
+        this.responses = [
+          {"score":7, "author":"Alice", "text": "Etiam id nisl at"},
+          {"score":6, "author":"Bob", "text":"neque vehicula aliquet. Vivamus"},
+          {"score":6, "author":"Carol", "text":"maximus libero eu libero"},
+          {"score":5, "author":"Dave", "text":"venenatis, porta tempus nunc"},
+          {"score":5, "author":"Eve", "text":"pretium. Aliquam lacus sapien,"},
+          {"score":5, "author":"Faythe", "text":"rhoncus at diam et,"},
+          {"score":4, "author":"Mallory", "text":"suscipit rhoncus felis. Proin"},
+          {"score":2, "author":"Oscar", "text":"libero lacus, feugiat sit"},
+          {"score":0, "author":"Peggy", "text":"amet dictum nec, sollicitudin"},
+          {"score":0, "author":"Sam", "text":"eget leo. Pellentesque lacinia."}];
+      },
+      finished: function(){this.fire('finished');}
+    });
+  </script>
+</dom-module>

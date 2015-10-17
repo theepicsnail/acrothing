@@ -1,0 +1,13 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<dom-module id="ac-new">
+    <template>
+        <paper-button on-tap="create">Create</paper-button> a new game and invite others to join!
+    </template>
+    <script>
+        Polymer({
+            create: function() {
+                Request.GET("/api/match/create").then(console.log.bind(console));
+            }
+        })
+    </script>
+</dom-module>

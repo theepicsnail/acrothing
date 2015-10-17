@@ -1,0 +1,116 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-input/paper-input-container.html">
+<dom-module id="ac-chat">
+  <template>
+    <style>
+
+      .chatBox {
+          display: flex;
+          flex-flow: column;
+          height: 100%;
+      }
+      .chatLog {
+        flex: 1 1 auto;
+        overflow:auto;
+        --iron-list-items-container: {
+          margin-top: 16px;
+          margin-left: 16px;
+          margin-right: 16px;
+        }
+      }
+
+      #input {
+        flex: 0 1 auto;
+        flex-shrink: 0;
+      }
+
+      .messageContainer {
+          margin-bottom: 8px;
+          padding-bottom: 16px;
+      }
+      .message {
+        width:auto;
+        padding: 8px;
+      }
+      .input {
+        margin: 8px;
+        margin-top: 0px;
+        padding: 8px;
+        flex-shrink: 0;
+      }
+    </style>
+
+    <div class="chatBox">
+
+      <iron-list items="[[chatLog]]" class="chatLog" >
+        <template>
+          <div class="messageContainer">
+            <paper-card elevation=3 class="message">
+              <div>
+                <small class="time">
+                  <span>[[item.time]]</span>
+                </small>
+              <div>
+
+              <span class="sender">
+                [<b>[[item.sender]]</b>]
+              </span>
+
+              <small class="time">
+                <span>[[item.message]]</span>
+              </small>
+
+            </div>
+          </paper-card>
+        </div>
+
+        </template>
+      </iron-list>
+
+      <paper-card elevation=3 class="input">
+        <paper-input id="input"
+                     floatingLabel="1"
+                     label="Message:"
+                     on-change="_inputchange"
+                     autofocus>
+        </paper-input>
+      </paper-card>
+    </div>
+  </template>
+
+
+  <script>
+    Polymer({
+      ready: function(token) {
+        this.chatLog = [];
+      },
+
+      addMessage: function(sender, message){
+        this.push("chatLog", {
+          time:new Date().toLocaleString(),
+          sender:sender,
+          message: message
+        });
+
+        var l = this.querySelector("iron-list");
+        l.scrollToIndex(0);
+        l.scrollToIndex(l.items.length);
+      },
+      _inputchange:function(event){
+        var message = event.target.value;
+        path = window.location.href + "/chat";
+        path += '?msg=' + encodeURIComponent(message);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', path, true);
+        xhr.send();
+        event.target.value = "";
+      },
+    });
+
+  </script>
+</dom-module>

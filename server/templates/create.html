@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+    <title>Acrothing</title>
+    <meta name="viewport"
+          content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script type="text/javascript" src="/_ah/channel/jsapi"></script>
+
+</head>
+<body>
+<script>
+  var token = '{{token}}';
+  var channel = new goog.appengine.Channel(token);
+  channel.open({
+    'onopen':console.log.bind(console),
+    'onmessage':console.log.bind(console),
+    'onerror':console.log.bind(console),
+    'onclose':console.log.bind(console),
+  })
+  console.log("Token: {{token}}");
+  console.log("Me: {{me}}");
+  console.log("Game: {{game_key}}");
+</script>
+</body>
+</html>

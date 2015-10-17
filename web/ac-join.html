@@ -1,0 +1,42 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<dom-module id="ac-join">
+    <template>
+
+        <paper-toolbar>
+            <paper-tabs id="tabs" selected="{{selected}}" self-end>
+                <paper-tab>Friends</paper-tab>
+                <paper-tab>Randoms</paper-tab>
+            </paper-tabs>
+        </paper-toolbar>
+
+        <iron-pages flex selected="{{selected}}">
+            <div>
+                <paper-input id='friendId'
+                             floatingLabel="1"
+                             label="Friends game ID">
+                </paper-input>
+                <br>
+                <paper-button on-tap="joinFriend">Join!</paper-button>
+            </div>
+            <div>
+                Random people will probably try to molest you. Good luck!<br>
+                <paper-button on-tap="joinRandom">Join!</paper-button>
+            </div>
+        </iron-pages>
+
+    </template>
+    <script>
+        Polymer({
+            selected:0,
+            joinFriend: function () {
+                gameId = this.$.friendId.value;
+                console.log("friend", gameId);
+            },
+            joinRandom: function () {
+                console.log("random");
+            }
+        })
+    </script>
+</dom-module>

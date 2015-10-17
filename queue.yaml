@@ -1,0 +1,5 @@
+queue:
+- name: batch
+  rate: 1/s
+- name: step
+  rate: 1/s
